@@ -15,6 +15,8 @@
 */
 package net.objecthunter.exp4j.function;
 
+import java.util.Random;
+
 /**
  * Class representing the builtin functions available for use in expressions
  */
@@ -41,8 +43,9 @@ public class Functions {
     private static final int INDEX_LOG10 = 19;
     private static final int INDEX_LOG2 = 20;
     private static final int INDEX_SGN = 21;
+    private static final int INDEX_RND = 22;
 
-    private static final Function[] builtinFunctions = new Function[22];
+    private static final Function[] builtinFunctions = new Function[23];
 
     static {
         builtinFunctions[INDEX_SIN] = new Function("sin") {
@@ -183,6 +186,13 @@ public class Functions {
                 }
             }
         };
+        builtinFunctions[INDEX_RND] = new Function("rnd", 1) {
+            @Override
+            public double apply(double... args) {
+                return  (new Random().nextDouble()*args[0]);
+            }
+        };
+
     }
 
     /**
@@ -236,6 +246,8 @@ public class Functions {
             return builtinFunctions[INDEX_EXPM1];
         } else if (name.equals("signum")) {
             return builtinFunctions[INDEX_SGN];
+        } else if (name.equals("rnd")) {
+            return builtinFunctions[INDEX_RND];
         } else {
             return null;
         }
